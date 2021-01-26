@@ -1,0 +1,305 @@
+内容回顾：
+		1.DOM
+			- 三步走
+				（1）获取事件源
+				（2）绑定事件
+				（3）事件驱动
+			- DOM操作
+			 - 对节点的操作
+				- 对标签属性的操作
+						getAttribute()
+						setAttribute()
+						.src
+						.alt
+						.id
+						.className **
+					
+					
+				- 对DOM的创建 销毁的操作(方法) 动态创建的
+						（1）创建
+							document.createElement
+							
+						（2）父.appendChild(子)
+						
+							父.insertBefore('要插入的节点','参考的子节点')
+				
+				
+						（3）销毁
+							父.removeChild(子)
+				- 对样式属性的操作
+						oDiv.style.cssStyle
+						
+						
+				- 对值的操作
+						
+					单闭合标签
+					<div></div>
+					(1)innerText  只是设置文本
+					(2)innerHTML  即设置了文本，又渲染了标签
+					
+					input
+					(3)value
+					
+					
+				- 对dom的获取三种方式
+					document.getElementById();
+					document.getElementsByTagName();
+					document.getElementsByClassName();
+					
+					
+				什么是动态页面（数据交互==》 数据驱动视图     ajax     XMLHttpRequest）和静态页面？
+				
+				http://www.baidu.com/s?wd=luffycity
+				
+				
+				库和框架
+				
+				库：小而精 js的一部分的功能
+				框架： 大而全 全家桶
+				
+				http://127.0.0.1:8080/home
+				
+				http://127.0.0.1:8080/course
+				
+				http://127.0.0.1:8080/home/light-course
+				
+				
+				交互  数据接口(api)
+				
+				前后端交互非常重要
+				
+				
+				
+				{
+					status:200,
+					data:[
+						{key1:},
+						{key2:},
+						{key3:},
+						{key4:},
+						{key5:},
+						
+					]
+				
+				}
+
+今日内容:
+
+		1.选项卡
+			（1）
+				 
+			var olis = document.getElementsByTagName('li');
+			var oPs = document.getElementsByTagName('p');
+
+			var i;
+			for(i = 0; i < olis.length; i++){
+
+
+				olis[i].index = i;
+
+
+				olis[i].onclick = function() {
+
+					for(var j = 0; j < olis.length; j++){
+						olis[j].className = '';
+						oPs[j].className = ''
+					}
+					
+					this.className = 'active';
+					 // olis[this.index].className = 'active';
+
+
+					 oPs[this.index].className = 'active';
+				}
+
+			}
+			(2)
+				 let olis = document.getElementsByTagName('li');
+				let oPs = document.getElementsByTagName('p');
+
+				
+				for(let i = 0; i < olis.length; i++){
+
+					olis[i].onclick = function() {
+						for(let j = 0; j < olis.length; j++){
+							olis[j].className = '';
+							oPs[j].className = ''
+						} 
+						this.className = 'active';
+						 oPs[i].className = 'active';
+					}
+
+				}
+		2.定时器
+			定时器
+		
+			（1）一次性定时器
+				 可以做异步
+			（2）循环周期定时器
+				可以做动画
+
+				js跟python一样 都有垃圾回收机制
+
+				but 定时器对象 垃圾回收收不回
+
+
+				开一次性定时器：
+				var timer = setTimeout(fn,1000);
+				开循环定时器
+				setInterval(fn,1000);
+
+
+				clearTimeout()
+				clearInterval()
+				
+			  /*
+				var timer = null;
+				document.getElementById('start').onclick = function() {
+					
+					// 未来 数据交互的时候 如果数据阻塞了，可以考虑 加一个一次性定时器来处理
+					timer  = setTimeout(function(){
+						console.log(1111);
+					},3000);
+					console.log(2222);
+
+				}
+				document.getElementById('clear').onclick = function() {
+					clearTimeout(timer);
+				}
+				*/
+				var count = 0;
+				var timer = null;
+				document.getElementById('start').onclick = function() {
+
+					var oDiv = document.getElementById('box');
+					clearInterval(timer);
+					
+					timer = setInterval(function() {
+						count+=10;
+
+						oDiv.style.marginLeft = count + 'px';
+						
+					}, 50)
+
+				}
+
+
+		3.js面向对象
+				//使用Object()内置的构造函数来创建对象
+
+
+				// new Array()
+				// []
+
+				/*
+				var person = new Object();
+
+				person.name = 'alex';
+
+				person.age = 18;
+
+				person.fav = function() {
+					
+					alert(this.name);
+				}
+				person.fav();
+				*/
+				/*
+				// 1.字面量方式创建对象
+				var person = {
+					name:'玖妖',
+					age:18,
+					fav:function() {
+						alert(this.name)
+					}
+				};
+
+				person.fav();
+				*/
+
+				//2.工厂模式创建
+				function createPerson(){
+					var person = new Object();
+					person.name = 'alex';
+
+					person.age = 18;
+
+					person.fav = function() {
+						
+						alert(this.name);
+					}
+					return person;
+				}
+
+
+				
+				function createFruit(){
+					var fruit = new Object();
+					fruit.name = 'alex';
+
+					fruit.age = 18;
+
+					fruit.fav = function() {
+						
+						alert(this.name);
+					}
+					return fruit;
+				}
+				var p1 = createPerson();
+				var f1 = createFruit();
+
+				console.log(p1 instanceof Object);
+				console.log(f1 instanceof Object);
+				
+				
+				//3.自定义构造函数
+				function Person(name,age) {
+					
+					this.name = name;
+					this.age = age;
+					this.fav = function() {
+						alert(this.name);
+					}
+				}
+
+				function Fruit(name,age) {
+					
+					this.name = name;
+					this.age = age;
+					this.fav = function() {
+						alert(this.name);
+					}
+				}
+				var p1 = new Person('alex',17);
+				var f1 = new Fruit('wusir',19);
+				console.log(p1 instanceof Object);
+				console.log(f1 instanceof Object);
+				console.log(p1 instanceof Person);
+				console.log(f1 instanceof Fruit);
+				
+				
+				//4.原型对象创建对象
+				function Person(name,age) {
+					this.name = name;
+					this.age = age;			 
+				}
+				// Person.prototype 它是person的父类
+
+
+				// 原型 prototype
+				Person.prototype.showName = function() {
+					// this指的是person
+					console.log(this.name)
+				}
+				var p1 = new Person('alex',18);
+				console.log(p1);
+				p1.showName();
+
+
+		4.BOM
+			本地信息对象
+			window.location
+			window.open()方法
+			
+		
+	
